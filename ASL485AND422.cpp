@@ -309,12 +309,10 @@ void ASL485AND422::initDB()
     if(!db.open())
     {
         qDebug()<< "database is error";
-        //return;
     }
     else
     {
         qDebug()<<"database is ok";
-        //return;
     }
     QSqlQuery query(db);
     bool bsuccess =
