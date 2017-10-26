@@ -105,6 +105,16 @@ bool ASL485AND422::checkSelf()
         return false;
 }
 
+void ASL485AND422::setTable(QString strName)
+{
+    qDebug() << __FUNCTION__ << m_pSqlModel->tableName();
+    m_pSqlModel->setTable(strName);
+    m_pSqlModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    bool result = m_pSqlModel->select();
+    qDebug() << __FUNCTION__ << result;
+    qDebug() << __FUNCTION__ << m_pSqlModel->tableName();
+}
+
 //设置相关的属性配置界面
 void ASL485AND422::initComponent()
 {
@@ -229,6 +239,19 @@ void ASL485AND422::initComponent()
     vLayout->addLayout(hLayoutStopError);
     vLayout->addLayout(hLayout2);
 
+    QHBoxLayout* hlayout3 = new QHBoxLayout;
+    QPushButton* pushChange = new QPushButton(QStringLiteral("切换数据库"),this);
+    hlayout3->addWidget(pushChange);
+    vLayout->addLayout(hlayout3);
+    connect(pushChange,&QPushButton::clicked, [&](){
+        static int index = 0;
+        if(index%2)
+        this->setTable("RS422_1");
+        else {
+            this->setTable("RS422_2");
+        }
+        index++;
+    });
     //lambda 映射
     connect(buttonCommit,
             &QPushButton::clicked,
@@ -304,7 +327,7 @@ void ASL485AND422::initDB()
     {
         db = QSqlDatabase::addDatabase("QSQLITE", "RM");
     }
-
+    qDebug() << "driver:" <<  QSqlDatabase::drivers();
     db.setDatabaseName("music.db");
     if(!db.open())
     {

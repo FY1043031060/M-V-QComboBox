@@ -47,6 +47,7 @@ public:
     int recvRS422Data(short channelNum, short length, unsigned char * pValue, int *pActalLength,double *timeLab);
     int injectRS422Error(short funcTion, unsigned char EnableValue);
     bool checkSelf() override;
+    void setTable(QString strName);
 private:
     int initRS422();
     int uninitRS422();

@@ -55,6 +55,7 @@
 #include <QPixmap>
 #include <QSize>
 #include <QSqlRelationalDelegate>
+#include <QStyledItemDelegate>
 #include <QPainter>
 
 QT_FORWARD_DECLARE_CLASS(QPainter)
